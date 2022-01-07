@@ -16,10 +16,12 @@ def _wildcard(idx, string, ds, result):
         ds.pop()
         ds.append('0')
         _wildcard(idx + 1, string, ds, result)
+        ds.pop()
 
     else:
         ds.append(string[idx])
         _wildcard(idx + 1, string, ds, result)
+        ds.pop()
 
 
 print(wilcard('1?1?1'))
