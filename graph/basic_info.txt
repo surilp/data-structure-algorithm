@@ -1,0 +1,25 @@
+undirected graph - edges are undirected
+directed graph - directed edges
+
+
+undirected graph - degree - # of edges incoming and outgoing
+total degree of all nodes = number of edges * 2
+
+
+Directed graph - incoming edge or outgoing edge
+
+indegree = number of incoming edge
+outdegree = number of outgoing edge
+
+
+undirected graph - path - sequence of nodes/vertex where none of the nodes are visited twice
+directed graph - path
+
+
+undirected cyclic graph
+undirected acyclic graph
+
+directed cyclic graph
+directed acyclic graph
+
+weighted graph
