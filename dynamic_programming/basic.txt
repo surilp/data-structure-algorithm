@@ -1,0 +1,5 @@
+Tabulation -> bottom up dynamic programming
+Memoization - top down dynamic programming
+
+
+Memoization -> tabulation -> space optimization
