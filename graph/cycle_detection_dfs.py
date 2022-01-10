@@ -25,7 +25,8 @@ def _detect_cycle_dfs(adj_list, visited, vertex, parent):
         visited[vertex] = True
         for adj_vertex in adj_list[vertex]:
             if not visited[adj_vertex]:
-                return _detect_cycle_dfs(adj_list, visited, adj_vertex, vertex)
+                if _detect_cycle_dfs(adj_list, visited, adj_vertex, vertex):
+                    return True
             elif visited[adj_vertex] and adj_vertex != parent:
                 print(adj_vertex, parent)
                 return True
