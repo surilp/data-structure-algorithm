@@ -1,0 +1,5 @@
+1 insert word
+2 search word
+3 startwith word
+
+
