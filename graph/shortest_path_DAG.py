@@ -1,3 +1,9 @@
+'''
+first do topo sort
+
+'''
+
+
 n = 6
 edges = [
     [0, [1, 2]],
@@ -18,16 +24,35 @@ def _get_adj_list(n, edges):
 
 def shortest_path_DAG(n, edges, source):
     adj_list = _get_adj_list(n, edges)
+    topo_result = topo_sort(n, edges)
     distance = [float('inf')] * n
     distance[source] = 0
-    _dfs(adj_list, distance, source)
+
+    while topo_result:
+        current = topo_result.pop()
+        if distance[current] < float('inf'):
+            for adj_vertex, weight in adj_list[current]:
+                if distance[adj_vertex] > distance[current] + weight:
+                    distance[adj_vertex] = distance[current] + weight
     return distance
 
-def _dfs(adj_list, distance, source):
-    for adj_vertex, weight in adj_list[source]:
-        if distance[adj_vertex] > distance[source] + weight:
-            distance[adj_vertex] = distance[source] + weight
-            _dfs(adj_list, distance, adj_vertex)
 
+def topo_sort(n, edges):
+    adj_list = _get_adj_list(n, edges)
+    visited = [None] * n
+    result = []
+    for vertex in range(n):
+        if not visited[vertex]:
+            _topo_sort(adj_list, visited, result, vertex)
+    return result
+
+def _topo_sort(adj_list, visited, result, vertex):
+    visited[vertex] = True
+    for adj_vertex, _ in adj_list[vertex]:
+        if not visited[adj_vertex]:
+            _topo_sort(adj_list, visited, result, adj_vertex)
+    result.append(vertex)
+
+print(topo_sort(n, edges))
 
 print(shortest_path_DAG(n, edges, 0))
