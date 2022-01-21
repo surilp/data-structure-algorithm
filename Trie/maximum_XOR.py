@@ -33,9 +33,6 @@ class Node:
             return self.data[bit]
 
 
-
-
-
 class Trie:
 
     def __init__(self):
@@ -54,9 +51,9 @@ class Trie:
     def max_xor(self, num):
         result = 0
         current = self.root
-        for idx in range(31,-1,-1):
+        for idx in range(31, -1, -1):
             curr_bit = self._is_bit_set(num, idx)
-            new = current.get_bit(1-curr_bit)
+            new = current.get_bit(1 - curr_bit)
             if new:
                 current = new
                 result = self._set_bit(result, idx)
@@ -64,19 +61,17 @@ class Trie:
                 current = current.get_bit(curr_bit)
         return result
 
-
-
     def _is_bit_set(self, num, shift):
         return (num >> shift) & 1
 
     def _set_bit(self, num, shift):
         return num | (1 << shift)
 
-nums = [9,8,7,5,4]
+
+nums = [9, 8, 7, 5, 4]
 t = Trie()
 t.insert_nums(nums)
 print(t.max_xor(8))
-
 
 
 def max_xor(arr1, arr2):
@@ -88,12 +83,10 @@ def max_xor(arr1, arr2):
     return result
 
 
-arr1 = [6,8]
-arr2 = [7,8,2]
+arr1 = [6, 8]
+arr2 = [7, 8, 2]
 print(max_xor(arr1, arr2))
 
-
-
-arr1 = [1,2]
-arr2 = [1,1]
+arr1 = [1, 2]
+arr2 = [1, 1]
 print(max_xor(arr1, arr2))
