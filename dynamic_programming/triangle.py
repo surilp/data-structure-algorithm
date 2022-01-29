@@ -46,3 +46,15 @@ def triangle_tabulation(triangle):
 
 
 print(triangle_tabulation(triangle))
+
+
+def triangle_v2(triangle):
+    return _triangle_v2(triangle, 0,0)
+
+def _triangle_v2(triangle, row, col):
+    if row == len(triangle) -1:
+        return triangle[row][col]
+
+    return min(_triangle_v2(triangle, row + 1, col), _triangle_v2(triangle, row + 1, col +1)) + triangle[row][col]
+
+print(triangle_v2(triangle))
