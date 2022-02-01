@@ -24,6 +24,12 @@ class Node:
         self.left = left
         self.right = right
 
+    def __eq__(self, other):
+        return self.val == other.val and self.left == other.left and self.right == other.right
+
+    def __hash__(self):
+        return hash((self.val, self.left, self.right))
+
 
 class Tree:
 
@@ -154,3 +160,46 @@ class Tree:
         while stack2:
             result.append(stack2.pop().val)
         return result
+
+    def iterative_post_order_traversal_1_stacks(self):
+        stack = []
+        result = []
+        cur = self.root
+
+        while cur or stack:
+            if cur:
+                stack.append(cur)
+                cur = cur.left
+            else:
+                cur = stack[-1]
+                cur = cur.right
+                if not cur:
+                    temp = stack.pop()
+                    result.append(temp.val)
+                    while stack and stack[-1].right and stack[-1].right == temp:
+                        temp = stack.pop()
+                        result.append(temp.val)
+                    cur = None
+        return result
+
+    def all_dfs_traversal(self):
+        stack = [[self.root, 1]]
+        pre_order = []
+        in_order = []
+        post_order = []
+        while stack:
+            current, order = stack[-1]
+            if order == 1:
+                pre_order.append(current.val)
+                stack[-1][1] += 1
+                if current.left:
+                    stack.append([current.left, 1])
+            elif order == 2:
+                in_order.append(current.val)
+                stack[-1][1] += 1
+                if current.right:
+                    stack.append([current.right, 1])
+            elif order == 3:
+                post_order.append(current.val)
+                stack.pop()
+        return pre_order, in_order, post_order
