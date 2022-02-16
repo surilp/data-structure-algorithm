@@ -3,7 +3,7 @@ parent pointers
 '''
 
 from tree.Tree import Tree
-from collections import deque, defaultdict
+
 
 class NodeAtDistanceK(Tree):
 
@@ -30,23 +30,6 @@ class NodeAtDistanceK(Tree):
             else:
                 self._nodes_at_distance_k(node.left, k, target, result, flag)
                 self._nodes_at_distance_k(node.right, k, target, result, flag)
-
-    def get_parent_pointers(self, node):
-        queue = deque()
-        queue.append(node)
-        parent_pointer = {}
-        while queue:
-            current = queue.popleft()
-            if current.left:
-                parent_pointer[current.left] = current
-                queue.append(current.left)
-            if current.right:
-                parent_pointer[current.right] = current
-                queue.append(current.right)
-        return parent_pointer
-
-
-
 
 
 data = {

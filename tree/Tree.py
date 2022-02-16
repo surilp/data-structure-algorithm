@@ -34,8 +34,36 @@ class Node:
 class Tree:
 
     def __init__(self, data):
-        self.root = Node(data["root"])
-        self.insert_nodes(data["nodes"])
+        if isinstance(data, dict):
+            self.root = Node(data["root"])
+            self.insert_nodes(data["nodes"])
+        elif isinstance(data, list):
+            self.root = self.insert_nodes_from_arr(data)
+            pass
+
+    def insert_nodes_from_arr(self, data):
+        data_len = len(data)
+        for idx in range(data_len):
+            if data[idx]:
+                data[idx] = Node(data[idx])
+        for idx in range(data_len):
+            current = data[idx]
+            if current:
+                right = self.get_right_child_idx(idx, data_len)
+                left = self.get_left_child_idx(idx, data_len)
+                if left:
+                    current.left = data[left]
+                if right:
+                    current.right = data[right]
+        return data[0]
+
+    def get_right_child_idx(self, parent, n):
+        right = (2 * parent) + 2
+        return right if right < n else None
+
+    def get_left_child_idx(self, parent, n):
+        left = (2 * parent) + 1
+        return left if left < n else None
 
     def insert_nodes(self, nodes):
         node_map = {self.root.val: self.root}
@@ -203,3 +231,17 @@ class Tree:
                 post_order.append(current.val)
                 stack.pop()
         return pre_order, in_order, post_order
+
+    def get_parent_pointers(self, node):
+        queue = deque()
+        queue.append(node)
+        parent_pointer = {}
+        while queue:
+            current = queue.popleft()
+            if current.left:
+                parent_pointer[current.left] = current
+                queue.append(current.left)
+            if current.right:
+                parent_pointer[current.right] = current
+                queue.append(current.right)
+        return parent_pointer
