@@ -25,7 +25,7 @@ class Node:
         self.right = right
 
     def __eq__(self, other):
-        return self.val == other.val and self.left == other.left and self.right == other.right
+        return self.val == other.val
 
     def __hash__(self):
         return hash((self.val, self.left, self.right))
