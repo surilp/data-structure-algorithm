@@ -17,7 +17,7 @@ def num_of_subarrays(nums, target):
     total = 0
     for i, num in enumerate(nums):
         total += num
-        if total > target:
+        if total >= target:
             cnt += 1
             total = 0
     if total > 0:
