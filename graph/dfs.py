@@ -1,17 +1,11 @@
+from Graph import Graph
+
 n = 7
 m = [(1, 2), (2, 4), (2, 7), (4, 6), (7, 6), (3, 5)]
 
 
-def _create_adj_list(n, m):
-    adj_list = [[] for _ in range(n + 1)]
-    for from_v, to_v in m:
-        adj_list[from_v].append(to_v)
-        adj_list[to_v].append(from_v)
-    return adj_list
-
-
 def dfs(n, m):
-    adj_list = _create_adj_list(n, m)
+    adj_list = Graph.get_adj_list(n, m)
     visited = [False] * (n + 1)
     result = []
     for vertex in range(1, n + 1):
