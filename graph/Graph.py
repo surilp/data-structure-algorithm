@@ -140,3 +140,51 @@ class Graph:
                     return True
         return False
 
+    def is_bipartite(self):
+        # each adjacent node does not have same color. Even cycle graph is bipartite
+        # carry parent color and if visited and color same not bipartite
+        return self._is_bipartite_dfs()
+
+    def _is_bipartite_bfs(self):
+        n, start = self._get_n_and_start()
+        visited = [-1] * n
+
+        def bfs(queue):
+            while queue:
+                current, color = queue.popleft()
+                for adj_vertex in self.adj_list[current]:
+                    if visited[adj_vertex] == -1:
+                        visited[adj_vertex] = 1 - color
+                        queue.append((adj_vertex, 1 - color))
+                    elif color == visited[adj_vertex]:
+                        return False
+            return True
+        for vertex in range(start, n):
+            if visited[vertex] == -1:
+                bfs_queue = deque()
+                bfs_queue.append((vertex, 0))
+                visited[vertex] = 0
+                if not bfs(bfs_queue):
+                    return False
+        return True
+
+    def _is_bipartite_dfs(self):
+        n, start = self._get_n_and_start()
+        visited = [-1] * n
+
+        def dfs(node, color):
+            visited[node] = color
+            for adj_vertex in self.adj_list[node]:
+                if visited[adj_vertex] == -1:
+                    if not dfs(adj_vertex, 1 - color):
+                        return False
+                elif visited[adj_vertex] == color:
+                    return False
+            return True
+
+        for vertex in range(start, n):
+            if visited[vertex] == - 1:
+                if not dfs(vertex, 0):
+                    return False
+        return True
+

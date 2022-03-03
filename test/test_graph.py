@@ -45,3 +45,17 @@ class GraphTest(TestCase):
         graph = Graph(n, edges, directed=True)
         result = graph.is_cycle_present()
         self.assertEqual(result, False)
+
+    def test_is_bipartite_true(self):
+        n = 8
+        edges = [(1, 2), (2, 3), (3, 6), (3, 4), (6, 5), (4, 5), (4, 7), (7, 8)]
+        graph = Graph(n, edges)
+        result = graph.is_bipartite()
+        self.assertEqual(result, True)
+
+    def test_is_bipartite_false(self):
+        n = 8
+        edges = [(1, 2), (2, 3), (3, 6), (3, 4), (6, 4), (4, 7), (7, 8)]
+        graph = Graph(n, edges)
+        result = graph.is_bipartite()
+        self.assertEqual(result, False)
