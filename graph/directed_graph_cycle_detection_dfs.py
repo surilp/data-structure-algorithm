@@ -3,10 +3,11 @@ m = [(1, 2), (2, 3), (3, 6), (6, 5), (4, 5), (3, 4), (7, 2), (7, 8), (8, 9), (9,
 
 
 def _get_adj_list(n, m):
-    adj_list = [[] for _ in range(n+1)]
+    adj_list = [[] for _ in range(n + 1)]
     for from_v, to_v in m:
         adj_list[from_v].append(to_v)
     return adj_list
+
 
 def detect_cycle_directed_dfs(n, m):
     adj_list = _get_adj_list(n, m)
@@ -17,7 +18,6 @@ def detect_cycle_directed_dfs(n, m):
             if _detect_cycle_directed_dfs(adj_list, visited, dfs_visited, vertex):
                 return True
     return False
-
 
 
 def _detect_cycle_directed_dfs(adj_list, visited, dfs_visited, vertex):
