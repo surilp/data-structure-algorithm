@@ -1,4 +1,5 @@
 from collections import deque
+from heapq import heappop, heappush, heapify
 
 
 class Graph:
@@ -187,4 +188,59 @@ class Graph:
                 if not dfs(vertex, 0):
                     return False
         return True
+
+    def topo_sort(self):
+        # 0 incoming edges first
+        # linear ordering of N vertices u -> v, u should be before you
+        # topo sort not possible with cycle
+        # only possible for DAG
+        return self._topo_sort_bfs()
+
+    def _topo_sort_dfs(self):
+        # once dfs is over for node, it goes into stack
+        n, start = self._get_n_and_start()
+        visited = [False] * n
+        stack = []
+
+        def dfs(node):
+            visited[node] = True
+            for adj_v in self.adj_list[node]:
+                if not visited[adj_v]:
+                    dfs(adj_v)
+            stack.append(node)
+
+        for vertex in range(start, n):
+            if not visited[vertex]:
+                dfs(vertex)
+        stack.reverse()
+        return stack
+
+    def _topo_sort_bfs(self):
+        # kahn's algo
+        # create in_degree matrix
+        in_degree = self._get_in_degree()
+        queue = deque()
+        for vertex, v_in_degree in enumerate(in_degree):
+            if v_in_degree == 0:
+                queue.append(vertex)
+        result = []
+        while queue:
+            vertex = queue.popleft()
+            self._update_in_degree(vertex, in_degree, queue)
+            result.append(vertex)
+        return result
+
+    def _update_in_degree(self, vertex, in_degree, queue):
+        for adj_vertex in self.adj_list[vertex]:
+            in_degree[adj_vertex] -= 1
+            if in_degree[adj_vertex] == 0:
+                queue.append(adj_vertex)
+
+    def _get_in_degree(self):
+        n, start = self._get_n_and_start()
+        in_degree = [0] * n
+        for _, to_vs in enumerate(self.adj_list):
+            for vertex in to_vs:
+                in_degree[vertex] += 1
+        return in_degree
 

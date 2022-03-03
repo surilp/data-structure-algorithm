@@ -59,3 +59,10 @@ class GraphTest(TestCase):
         graph = Graph(n, edges)
         result = graph.is_bipartite()
         self.assertEqual(result, False)
+
+    def test_topo_sort(self):
+        n = 6
+        edges = [(1, 2), (2, 3), (5, 3), (4, 5), (4, 0)]
+        graph = Graph(n, edges, directed=True, zero_based=True)
+        result = graph.topo_sort()
+        self.assertEqual([1, 4, 2, 5, 0, 3], result)
