@@ -66,3 +66,31 @@ class GraphTest(TestCase):
         graph = Graph(n, edges, directed=True, zero_based=True)
         result = graph.topo_sort()
         self.assertEqual([1, 4, 2, 5, 0, 3], result)
+
+    def test_shortest_distance_bfs_1_0(self):
+        n = 6
+        edges = [(1, 2, 1), (1, 4, 0), (2, 3, 1), (4, 3, 0), (3, 5, 0), (3, 6, 0)]
+        graph = Graph(n, edges)
+        result = graph.find_shortest_distance_bfs_1or0()
+        self.assertEqual([float('inf'), 0, 1, 0, 0, 0, 0], result)
+
+    def test_shortest_distance_bfs_1_0_2(self):
+        n = 6
+        edges = [(1, 2, 0), (1, 3, 1), (2, 3, 0), (2, 4, 1), (3, 5, 1), (4, 5, 1), (4, 6, 0), (5, 6, 0)]
+        graph = Graph(n, edges)
+        result = graph.find_shortest_distance_bfs_1or0()
+        self.assertEqual([float('inf'), 0, 0, 0, 1, 1, 1], result)
+
+    def test_shorted_distance_different_weight(self):
+        n = 4
+        edges = [(1, 2, 6), (1, 3, 1), (2, 4, 1), (3, 4, 2)]
+        graph = Graph(n, edges)
+        result = graph.find_shortest_distance_different_weights()
+        self.assertEqual([float('inf'), 0, 4, 1, 3], result)
+
+    def test_shortest_distance_path(self):
+        n = 5
+        edges = [(1, 2, 2), (1, 4, 1), (4, 3, 3), (2, 3, 4), (2, 5, 5), (3, 5, 1)]
+        graph = Graph(n, edges)
+        result = graph.find_shortest_distance_path(1, 5)
+        self.assertEqual(None, result)

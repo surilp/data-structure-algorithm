@@ -34,13 +34,13 @@ class Graph:
             from_v = edge[0]
             to_v = edge[1]
             weight = None if len(edge) < 3 else edge[2]
-            if weight:
+            if weight is not None:
                 temp = [to_v, weight]
             else:
                 temp = to_v
             adj_list[from_v].append(temp)
             if not directed:
-                if weight:
+                if weight is not None:
                     temp = [from_v, weight]
                 else:
                     temp = from_v
@@ -243,4 +243,67 @@ class Graph:
             for vertex in to_vs:
                 in_degree[vertex] += 1
         return in_degree
+
+    def find_shortest_distance_bfs_1or0(self):
+        # deque - 0 distance push from left, 1 distance push from right
+        n, start = self._get_n_and_start()
+        distance = [float('inf')] * n
+        distance[start] = 0
+        queue = deque()
+        queue.append(start)
+
+        while queue:
+            vertex = queue.popleft()
+            for adj_vertex, weight in self.adj_list[vertex]:
+                new_weight = distance[vertex] + weight
+                if distance[adj_vertex] > new_weight:
+                    distance[adj_vertex] = new_weight
+                    if weight == 0:
+                        queue.appendleft(adj_vertex)
+                    else:
+                        queue.append(adj_vertex)
+        return distance
+
+    def find_shortest_distance_different_weights(self):
+        # dijkstra algo. push weight in priority queue and pop
+        # does not work for negative cycle
+        n, start = self._get_n_and_start()
+        distance = [float('inf')] * n
+        distance[start] = 0
+        heap = []
+        heappush(heap, (0, start))
+        while heap:
+            dist, vertex = heappop(heap)
+            for adj_vertex, adj_distance in self.adj_list[vertex]:
+                new_dist = dist + adj_distance
+                if new_dist < distance[adj_vertex]:
+                    distance[adj_vertex] = new_dist
+                    heappush(heap, (new_dist, adj_vertex))
+        return distance
+
+    def find_shortest_distance_path(self, source, final_destination):
+        # dijkstra algo. push weight in priority queue and pop
+        # parent array - who updated distance is what you need to know
+        n, start = self._get_n_and_start()
+        distance = [float('inf')] * n
+        parent = [-1] * n
+        distance[source] = 0
+        parent[source] = source
+        heap = []
+        heappush(heap, (0, start))
+        while heap:
+            dist, vertex = heappop(heap)
+            for adj_vertex, adj_distance in self.adj_list[vertex]:
+                new_dist = dist + adj_distance
+                if new_dist < distance[adj_vertex]:
+                    parent[adj_vertex] = vertex
+                    distance[adj_vertex] = new_dist
+                    heappush(heap, (new_dist, adj_vertex))
+        result = []
+        while source != final_destination:
+            result.append(final_destination)
+            final_destination = parent[final_destination]
+        result.append(source)
+        result.reverse()
+        return result
 
