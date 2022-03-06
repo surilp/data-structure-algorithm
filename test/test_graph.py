@@ -93,4 +93,4 @@ class GraphTest(TestCase):
         edges = [(1, 2, 2), (1, 4, 1), (4, 3, 3), (2, 3, 4), (2, 5, 5), (3, 5, 1)]
         graph = Graph(n, edges)
         result = graph.find_shortest_distance_path(1, 5)
-        self.assertEqual(None, result)
+        self.assertEqual([1, 4, 3, 5], result)

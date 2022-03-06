@@ -1,8 +1,7 @@
-from Graph import Graph
+from graph.Graph import Graph
 
 n = 7
 m = [(1, 2), (2, 4), (2, 7), (4, 6), (7, 6), (3, 5)]
-
 
 def dfs(n, m):
     adj_list = Graph.get_adj_list(n, m)

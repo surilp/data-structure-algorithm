@@ -14,48 +14,36 @@ union - combine two into 1 componenet
     - if different = attache 2 to 1 or 1 to 2
     - if 2 to 1 is attached, then rank of 1 increment
 
+# if two nodes belong to same component
+# union - initially self is root, when you connect two one become parent of another, connect root of two parent
+# find parent
+# path compression
+# smaller size to bigger size component
+
 '''
 
 
-class DisjointedSet:
+class DSU:
 
-    def __init__(self, n):
-        self.rank = [0] * (n + 1)
-        self.parent = [i for i in range(n + 1)]
+    def __init__(self, size):
+        self.parent = [i for i in range(size)]
+        self.size = [1] * size
 
-    def union(self, v1, v2):
-        v1_parent = self.get_parent(v1)
-        v2_parent = self.get_parent(v2)
-        if v1_parent != v2_parent:
-            if self.rank[v1_parent] == self.rank[v2_parent]:
-                self.parent[v2_parent] = v1_parent
-                self.rank[v1_parent] += 1
-            elif self.rank[v1_parent] > self.rank[v2_parent]:
-                self.parent[v2_parent] = v1_parent
+    def union(self, u, v):
+        u_parent = self.find_parent(u)
+        v_parent = self.find_parent(v)
+
+        if u_parent != v_parent:
+            if self.size[u_parent] < self.size[v_parent]:
+                self.parent[u_parent] = v_parent
+                self.size[v_parent] += self.size[u_parent]
             else:
-                self.parent[v1_parent] = v2_parent
+                self.parent[v_parent] = u_parent
+                self.size[u_parent] += self.size[v_parent]
 
-    def get_parent(self, v):
-        current = v
-        while current != self.parent[current]:
-            current = self.parent[current]
-        self.parent[v] = current
-        return current
-
-
-d = DisjointedSet(7)
-print(d.get_parent(1))
-print(d.get_parent(2))
-print(d.union(1, 2))
-print(d.union(2, 3))
-print(d.union(4, 5))
-print(d.union(6, 7))
-print(d.union(5, 6))
-print(d.union(3, 7))
-print(d.get_parent(1))
-print(d.get_parent(2))
-print(d.get_parent(3))
-print(d.get_parent(4))
-print(d.get_parent(5))
-print(d.get_parent(6))
-print(d.get_parent(7))
+    def find_parent(self, node):
+        temp = node
+        while self.parent[temp] != temp:
+            temp = self.parent[temp]
+        self.parent[node] = temp
+        return self.parent[node]
