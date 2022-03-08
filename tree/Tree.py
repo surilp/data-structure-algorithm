@@ -30,6 +30,12 @@ class Node:
     def __hash__(self):
         return hash((self.val, self.left, self.right))
 
+    def __str__(self):
+        return str(self.val)
+
+    def __repr__(self):
+        return str(self.val)
+
 
 class Tree:
 
