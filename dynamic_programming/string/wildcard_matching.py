@@ -13,14 +13,14 @@ def wildcard_matching(s1, s2):
         if i < 0:
             return False
 
-        if s1[i] == s2[j] and s1[i] == '?':
+        if s1[i] == s2[j] or s1[i] == '?':
             return helper(i - 1, j - 1)
 
         if s1[i] not in ['*', '?']:
             return False
 
         if s1[i] == '*':
-            return helper(i, j - 1) or helper(i - 1, j - 1) or helper(i - 1, j)
+            return helper(i, j - 1) or helper(i - 1, j)
 
     return helper(s1_n - 1, s2_n - 1)
 
@@ -50,4 +50,8 @@ print(wildcard_matching(s1, s2))
 
 s1 = "ab?d"
 s2 = "abcc"
+print(wildcard_matching(s1, s2))
+
+s1 = "*a*b"
+s2 = "adceb"
 print(wildcard_matching(s1, s2))
