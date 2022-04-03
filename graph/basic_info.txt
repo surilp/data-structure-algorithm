@@ -23,3 +23,16 @@ directed cyclic graph
 directed acyclic graph
 
 weighted graph
+
+
+bfs
+dfs
+
+visit outside of function and for adj visit inside loop
+
+
+undirected cycle check - carry parent and check for cycle
+directed cycle check - have visted and path visited and when visited and pathvisited try cycle
+bipertite - adjacent node with different colors. Odd cycle graph cannot be bipertite. Color array color as you go
+toposort - applied to DAG - directed acyclic graph- dfs and once over put that v in stack and return reversed stack
+toposort bfs - indegree, queue
