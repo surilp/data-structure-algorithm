@@ -36,3 +36,6 @@ directed cycle check - have visted and path visited and when visited and pathvis
 bipertite - adjacent node with different colors. Odd cycle graph cannot be bipertite. Color array color as you go
 toposort - applied to DAG - directed acyclic graph- dfs and once over put that v in stack and return reversed stack
 toposort bfs - indegree, queue
+shortest path 0/1 BFS - use deque pair<node, distance>, distance array start with 0 everything else infinity. +0 distance append left else append right
+shortest distance multi weight - priority queue
+DSU - based on size. Figure out if two nodes belong to same component. Union and find Parent
