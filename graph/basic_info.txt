@@ -39,3 +39,7 @@ toposort bfs - indegree, queue
 shortest path 0/1 BFS - use deque pair<node, distance>, distance array start with 0 everything else infinity. +0 distance append left else append right
 shortest distance multi weight - priority queue
 DSU - based on size. Figure out if two nodes belong to same component. Union and find Parent
+MST - n nodes, n -1 edges
+Kruskal - sort all edges according to weight. use DSU if parent different union, else skip
+Bridges M graph - time inserted - reach node for the first time, minimum time of insertion from adjacent node apart from parent
+Bellman ford - run loop for n-1 and for each edge update distance
